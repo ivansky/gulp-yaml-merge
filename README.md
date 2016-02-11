@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/gulp-yaml-merge.svg)](https://badge.fury.io/js/gulp-yaml-merge)
+[![Code Climate](https://codeclimate.com/github/ivansky/gulp-yaml-merge/badges/gpa.svg)](https://codeclimate.com/github/ivansky/gulp-yaml-merge)
+
 ## Installation
 
 Install package with NPM and add it to your development dependencies:
