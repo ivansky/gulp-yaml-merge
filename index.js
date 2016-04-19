@@ -40,8 +40,17 @@ module.exports = function (file, opt) {
     }
 
     latestFile = file;
-
-    var data = yaml.safeLoad(file.contents, loadOptions);
+    
+    // pass file path for yaml error handler
+    loadOptions = merge(loadOptions, {filename: file.path});
+    
+    try {
+      var data = yaml.safeLoad(file.contents, loadOptions);
+    } catch(err) {
+      this.emit('error', new PluginError('gulp-yaml-merge', err));
+      cb();
+      return;
+    }
 
     outData = merge(outData, data);
 
