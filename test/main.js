@@ -3,7 +3,7 @@
 var fs = require('fs');
 var through = require('through2');
 var assert = require('assert');
-var gutil = require('gulp-util');
+var File = require('vinyl');
 var gulp = require('gulp');
 
 var yamlMerge = require('../index.js');
@@ -21,11 +21,10 @@ function streamifyString() {
 
     setTimeout(function(){
         for(var i = 0; i < args.length; i++) {
-            stream.push(new gutil.File({
+            stream.push(new File({
                 cwd: "",
-                base: "",
                 path: i.toString(),
-                contents: new Buffer(args[i], 'utf8')
+                contents: Buffer.from(args[i], 'utf8')
             }));
         }
         stream.end();
