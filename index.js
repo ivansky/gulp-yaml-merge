@@ -2,11 +2,10 @@
 
 var through = require('through2');
 var path = require('path');
-var gutil = require('gulp-util');
-var PluginError = gutil.PluginError;
+var PluginError = require('plugin-error');
 var yaml = require('js-yaml');
 var merge = require('lodash.merge');
-var File = gutil.File;
+var File = require('vinyl');
 
 module.exports = function (file, opt) {
   if (!file) {
@@ -67,7 +66,7 @@ module.exports = function (file, opt) {
       outFile = new File(file);
     }
 
-    outFile.contents = new Buffer(yaml.safeDump(outData, dumpOptions));
+    outFile.contents = Buffer.from(yaml.safeDump(outData, dumpOptions));
 
     this.push(outFile);
 
