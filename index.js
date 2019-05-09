@@ -1,11 +1,11 @@
 'use strict';
 
-var through = require('through2');
-var path = require('path');
-var PluginError = require('plugin-error');
-var yaml = require('js-yaml');
-var merge = require('lodash.merge');
-var File = require('vinyl');
+const through = require('through2');
+const path = require('path');
+const PluginError = require('plugin-error');
+const yaml = require('js-yaml');
+const merge = require('lodash.merge');
+const File = require('vinyl');
 
 module.exports = function (file, opt) {
   if (!file) {
@@ -14,11 +14,11 @@ module.exports = function (file, opt) {
 
   opt = opt || {};
 
-  var loadOptions = opt.load || {};
-  var dumpOptions = opt.dump || {};
+  let loadOptions = opt.load || {};
+  const dumpOptions = opt.dump || {};
 
-  var latestFile;
-  var outData = {};
+  let latestFile;
+  let outData = {};
 
   if (typeof file !== 'string' && typeof file.path !== 'string') {
     throw new PluginError('gulp-yaml-merge', 'Missing path in file options for gulp-yaml-merge');
@@ -39,28 +39,26 @@ module.exports = function (file, opt) {
     }
 
     latestFile = file;
-    
-    // pass file path for yaml error handler
-    loadOptions = merge(loadOptions, {filename: file.path});
-    
-    try {
-      var data = yaml.safeLoad(file.contents, loadOptions);
-    } catch(err) {
-      this.emit('error', new PluginError('gulp-yaml-merge', err));
-      cb();
-      return;
-    }
 
-    outData = merge(outData, data);
+    // pass file path for yaml error handler
+    loadOptions = merge(loadOptions, { filename: file.path });
+
+    try {
+      const data = yaml.safeLoad(file.contents, loadOptions);
+
+      outData = merge(outData, data);
+    } catch (err) {
+      this.emit('error', new PluginError('gulp-yaml-merge', err));
+    }
 
     cb();
   }
 
   function endStream(cb) {
-    var outFile;
+    let outFile;
 
     if (typeof file === 'string') {
-      outFile = latestFile.clone({contents: false});
+      outFile = latestFile.clone({ contents: false });
       outFile.path = path.join(latestFile.base, file);
     } else {
       outFile = new File(file);

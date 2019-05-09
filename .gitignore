@@ -5,4 +5,5 @@ node_modules
 build
 *.node
 components
+coverage
 .nyc_output
